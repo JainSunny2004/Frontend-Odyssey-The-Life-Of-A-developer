@@ -1,0 +1,594 @@
+/* ============================================================
+   ANIMATIONS.CSS
+   All keyframe definitions + utility classes.
+   Consumed by globals.css via @import.
+
+   Sections:
+   A. Text effects       (glitch, typewriter blink, neon pulse)
+   B. Movement           (float, shake, bounce-in)
+   C. Visual overlays    (scanline, flicker)
+   D. Coffee section     (coffee rise, steam)
+   E. Reveal / entrance  (fadeInUp, fadeInLeft, fadeInRight, zoomIn)
+   F. Particles          (matrix fall, error rain, confetti)
+   G. Utility classes    (apply keyframes with duration variants)
+   ============================================================ */
+
+/* ============================================================
+   A. TEXT EFFECTS
+   ============================================================ */
+
+/* ── Glitch ──
+   Two-layer chromatic aberration glitch.
+   Components reference --glitch-color-1/2 via local override. */
+@keyframes glitch-main {
+  0%   { clip-path: inset(0 0 100% 0); transform: translate(0); }
+  5%   { clip-path: inset(10% 0 60% 0); transform: translate(-4px, 2px); }
+  10%  { clip-path: inset(50% 0 20% 0); transform: translate(4px, -2px); }
+  15%  { clip-path: inset(70% 0 10% 0); transform: translate(-2px, 3px); }
+  20%  { clip-path: inset(0 0 0 0);     transform: translate(0); }
+  100% { clip-path: inset(0 0 0 0);     transform: translate(0); }
+}
+
+@keyframes glitch-before {
+  0%   { clip-path: inset(20% 0 55% 0); transform: translate(-6px, -1px); opacity: 0.8; }
+  5%   { clip-path: inset(65% 0 5% 0);  transform: translate(6px,  2px);  opacity: 0.6; }
+  10%  { clip-path: inset(40% 0 30% 0); transform: translate(-3px, 1px);  opacity: 0.9; }
+  15%  { clip-path: inset(0% 0 80% 0);  transform: translate(4px, -3px);  opacity: 0.7; }
+  20%  { clip-path: inset(100% 0 0% 0); transform: translate(0);          opacity: 0;   }
+  100% { clip-path: inset(100% 0 0% 0); transform: translate(0);          opacity: 0;   }
+}
+
+@keyframes glitch-after {
+  0%   { clip-path: inset(55% 0 15% 0); transform: translate(6px,  1px);  opacity: 0.7; }
+  5%   { clip-path: inset(10% 0 70% 0); transform: translate(-5px,-2px);  opacity: 0.8; }
+  10%  { clip-path: inset(80% 0 5% 0);  transform: translate(3px,  3px);  opacity: 0.6; }
+  15%  { clip-path: inset(25% 0 50% 0); transform: translate(-4px, 1px);  opacity: 0.9; }
+  20%  { clip-path: inset(100% 0 0% 0); transform: translate(0);          opacity: 0;   }
+  100% { clip-path: inset(100% 0 0% 0); transform: translate(0);          opacity: 0;   }
+}
+
+/* ── Typewriter cursor blink ── */
+@keyframes cursorBlink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+/* ── Neon glow pulse ──
+   Animates text-shadow intensity for breathing neon effect. */
+@keyframes neonPulse {
+  0%, 100% {
+    text-shadow:
+      0 0 8px  currentColor,
+      0 0 20px currentColor,
+      0 0 40px currentColor;
+    opacity: 1;
+  }
+  50% {
+    text-shadow:
+      0 0 4px  currentColor,
+      0 0 10px currentColor,
+      0 0 20px currentColor;
+    opacity: 0.85;
+  }
+}
+
+/* ── Neon border pulse ── */
+@keyframes neonBorderPulse {
+  0%, 100% {
+    box-shadow:
+      0 0 8px  rgba(0, 255, 136, 0.4),
+      0 0 20px rgba(0, 255, 136, 0.2),
+      inset 0 0 8px rgba(0, 255, 136, 0.05);
+  }
+  50% {
+    box-shadow:
+      0 0 16px rgba(0, 255, 136, 0.7),
+      0 0 40px rgba(0, 255, 136, 0.35),
+      inset 0 0 16px rgba(0, 255, 136, 0.1);
+  }
+}
+
+/* ============================================================
+   B. MOVEMENT
+   ============================================================ */
+
+/* ── Float — gentle vertical bob for 3D scenes ── */
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  33%       { transform: translateY(-12px) rotate(0.5deg); }
+  66%       { transform: translateY(-6px) rotate(-0.3deg); }
+}
+
+@keyframes floatSlow {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-18px); }
+}
+
+/* ── Shake — screen/element shake for debugging section ── */
+@keyframes shake {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  10%  { transform: translate(-6px,  2px) rotate(-0.5deg); }
+  20%  { transform: translate( 6px, -2px) rotate( 0.5deg); }
+  30%  { transform: translate(-4px,  4px) rotate(-0.3deg); }
+  40%  { transform: translate( 4px, -4px) rotate( 0.3deg); }
+  50%  { transform: translate(-8px,  1px) rotate(-0.7deg); }
+  60%  { transform: translate( 8px, -1px) rotate( 0.7deg); }
+  70%  { transform: translate(-3px,  3px) rotate(-0.2deg); }
+  80%  { transform: translate( 3px, -3px) rotate( 0.2deg); }
+  90%  { transform: translate(-2px,  1px) rotate(-0.1deg); }
+}
+
+/* ── Subtle shake (milder, for cards) ── */
+@keyframes shakeSubtle {
+  0%, 100% { transform: translate(0, 0); }
+  25%  { transform: translate(-3px,  1px); }
+  50%  { transform: translate( 3px, -1px); }
+  75%  { transform: translate(-1px,  2px); }
+}
+
+/* ── Bounce in — for pop/squash interactions ── */
+@keyframes bounceIn {
+  0%   { transform: scale(0); opacity: 0; }
+  60%  { transform: scale(1.2); opacity: 1; }
+  80%  { transform: scale(0.92); }
+  100% { transform: scale(1); }
+}
+
+/* ── Bounce out — for "squash bug" dismiss ── */
+@keyframes bounceOut {
+  0%   { transform: scale(1);  opacity: 1; }
+  30%  { transform: scale(1.3); }
+  100% { transform: scale(0);  opacity: 0; }
+}
+
+/* ── Spin — clock hands, loading ── */
+@keyframes spinClock {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* ── Wiggle — tab hover micro-interaction ── */
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  25%  { transform: rotate(-3deg); }
+  75%  { transform: rotate(3deg); }
+}
+
+/* ============================================================
+   C. VISUAL OVERLAYS
+   ============================================================ */
+
+/* ── Scanline — vertical scroll through CRT lines ── */
+@keyframes scanline {
+  0%   { background-position: 0 0; }
+  100% { background-position: 0 100vh; }
+}
+
+/* ── Flicker — fluorescent/deadline light flicker ── */
+@keyframes flicker {
+  0%   { opacity: 1; }
+  5%   { opacity: 0.85; }
+  10%  { opacity: 1; }
+  15%  { opacity: 0.92; }
+  20%  { opacity: 1; }
+  55%  { opacity: 1; }
+  57%  { opacity: 0.6; }
+  59%  { opacity: 1; }
+  61%  { opacity: 0.75; }
+  63%  { opacity: 1; }
+  90%  { opacity: 1; }
+  92%  { opacity: 0.88; }
+  94%  { opacity: 1; }
+  100% { opacity: 1; }
+}
+
+/* ── Vignette pulse ── */
+@keyframes vignettePulse {
+  0%, 100% { opacity: 0.4; }
+  50%       { opacity: 0.7; }
+}
+
+/* ── RGB aberration (for glitch effect on images/divs) ── */
+@keyframes rgbShift {
+  0%   { filter: none; }
+  10%  { filter: drop-shadow(3px 0 0 rgba(255,0,0,0.5)) drop-shadow(-3px 0 0 rgba(0,255,255,0.5)); }
+  20%  { filter: none; }
+  70%  { filter: none; }
+  75%  { filter: drop-shadow(-4px 0 0 rgba(255,0,0,0.4)) drop-shadow(4px 0 0 rgba(0,255,255,0.4)); }
+  80%  { filter: none; }
+  100% { filter: none; }
+}
+
+/* ============================================================
+   D. COFFEE SECTION
+   ============================================================ */
+
+/* ── Coffee rise — liquid fills up from bottom ── */
+@keyframes coffeeRise {
+  0%   { transform: scaleY(0); transform-origin: bottom; }
+  100% { transform: scaleY(1); transform-origin: bottom; }
+}
+
+/* ── Coffee steam particle ── */
+@keyframes steamRise {
+  0%   {
+    transform: translateY(0) translateX(0) scale(0.6);
+    opacity: 0.8;
+  }
+  40%  {
+    transform: translateY(-30px) translateX(8px) scale(0.9);
+    opacity: 0.5;
+  }
+  80%  {
+    transform: translateY(-65px) translateX(-5px) scale(1.2);
+    opacity: 0.2;
+  }
+  100% {
+    transform: translateY(-90px) translateX(3px) scale(1.4);
+    opacity: 0;
+  }
+}
+
+/* ── Steam delayed variants ── */
+@keyframes steamRise2 {
+  0%   { transform: translateY(0) translateX(0) scale(0.5); opacity: 0.6; }
+  50%  { transform: translateY(-45px) translateX(-10px) scale(1); opacity: 0.3; }
+  100% { transform: translateY(-80px) translateX(6px) scale(1.3); opacity: 0; }
+}
+
+/* ── Warm background gradient shift (dark → coffee) ── */
+@keyframes warmGradient {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ── Coffee pour ── */
+@keyframes pour {
+  0%   { height: 0; opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { height: 60px; opacity: 0; }
+}
+
+/* ============================================================
+   E. REVEAL / ENTRANCE ANIMATIONS
+   ============================================================ */
+
+/* ── Fade In Up ── */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Fade In Down ── */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Fade In Left ── */
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ── Fade In Right ── */
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ── Zoom In ── */
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale(0.75);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ── Zoom In Up (combined) ── */
+@keyframes zoomInUp {
+  from {
+    opacity: 0;
+    transform: scale(0.8) translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* ── Slide In from bottom (for cards, timeline nodes) ── */
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(60px);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+/* ── Blur in ── */
+@keyframes blurIn {
+  from {
+    opacity: 0;
+    filter: blur(20px);
+    transform: scale(1.05);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: scale(1);
+  }
+}
+
+/* ── Text reveal (clip-path wipe) ── */
+@keyframes textReveal {
+  from { clip-path: inset(0 100% 0 0); }
+  to   { clip-path: inset(0 0% 0 0); }
+}
+
+/* ── Card flip (used in Section 6 enlightenment) ── */
+@keyframes flipIn {
+  from { transform: rotateY(-90deg); opacity: 0; }
+  to   { transform: rotateY(0deg);   opacity: 1; }
+}
+
+/* ── Confetti burst ── */
+@keyframes confettiFall {
+  0%   { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+
+@keyframes confettiSway {
+  0%, 100% { transform: translateX(0); }
+  25%       { transform: translateX(15px); }
+  75%       { transform: translateX(-15px); }
+}
+
+/* ============================================================
+   F. PARTICLE / RAIN EFFECTS
+   ============================================================ */
+
+/* ── Matrix character fall ── */
+@keyframes matrixFall {
+  0%   { transform: translateY(-100%); opacity: 1; }
+  80%  { opacity: 0.6; }
+  100% { transform: translateY(100vh); opacity: 0; }
+}
+
+/* ── Error message rain (Section 3) ── */
+@keyframes errorRain {
+  0%   {
+    transform: translateY(-60px) translateX(0) rotate(-2deg);
+    opacity: 0;
+  }
+  10%  { opacity: 1; }
+  85%  { opacity: 0.6; }
+  100% {
+    transform: translateY(110vh) translateX(20px) rotate(2deg);
+    opacity: 0;
+  }
+}
+
+/* ── Energy drink can stack (GSAP handles individual, CSS for wobble) ── */
+@keyframes canWobble {
+  0%, 100% { transform: rotate(-1deg); }
+  50%       { transform: rotate(1deg); }
+}
+
+/* ── Timeline line draw (SVG stroke offset handled by GSAP) ── */
+@keyframes lineGrow {
+  from { transform: scaleY(0); transform-origin: top; }
+  to   { transform: scaleY(1); transform-origin: top; }
+}
+
+/* ── Node pulse (commit timeline) ── */
+@keyframes nodePulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 currentColor;
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 0 8px transparent;
+    transform: scale(1.1);
+  }
+}
+
+/* ============================================================
+   G. UTILITY CLASSES
+   Duration variants: -fast (300ms), -base (600ms), -slow (1s), -slower (1.5s)
+   Each class sets animation-fill-mode: both so elements stay
+   at their end state and respect reduced-motion automatically.
+   ============================================================ */
+
+/* ── Fill mode default ── */
+[class*="anim-"] {
+  animation-fill-mode: both;
+}
+
+/* ── Glitch utilities ── */
+.anim-glitch {
+  animation: glitch-main 3s steps(1) infinite;
+}
+.anim-glitch-intense {
+  animation: glitch-main 1.5s steps(1) infinite;
+}
+
+/* ── Neon pulse ── */
+.anim-neon-pulse {
+  animation: neonPulse 2.5s ease-in-out infinite;
+}
+.anim-neon-pulse-fast {
+  animation: neonPulse 1.2s ease-in-out infinite;
+}
+.anim-neon-border {
+  animation: neonBorderPulse 2.5s ease-in-out infinite;
+}
+
+/* ── Float ── */
+.anim-float {
+  animation: float 5s ease-in-out infinite;
+}
+.anim-float-slow {
+  animation: floatSlow 7s ease-in-out infinite;
+}
+
+/* ── Shake ── */
+.anim-shake {
+  animation: shake 0.6s ease-in-out;
+}
+.anim-shake-loop {
+  animation: shakeSubtle 0.4s ease-in-out infinite;
+}
+
+/* ── Flicker ── */
+.anim-flicker {
+  animation: flicker 4s linear infinite;
+}
+.anim-flicker-fast {
+  animation: flicker 1.5s linear infinite;
+}
+
+/* ── RGB Shift ── */
+.anim-rgb-shift {
+  animation: rgbShift 3s steps(1) infinite;
+}
+
+/* ── Fade In Up ── */
+.anim-fade-up {
+  animation: fadeInUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.anim-fade-up-fast {
+  animation: fadeInUp 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.anim-fade-up-slow {
+  animation: fadeInUp 1s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* ── Fade In Left / Right ── */
+.anim-fade-left {
+  animation: fadeInLeft 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.anim-fade-right {
+  animation: fadeInRight 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* ── Zoom In ── */
+.anim-zoom-in {
+  animation: zoomIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+.anim-zoom-in-up {
+  animation: zoomInUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* ── Slide In Up ── */
+.anim-slide-up {
+  animation: slideInUp 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* ── Blur In ── */
+.anim-blur-in {
+  animation: blurIn 0.7s ease both;
+}
+
+/* ── Text reveal wipe ── */
+.anim-text-reveal {
+  animation: textReveal 0.8s cubic-bezier(0.77, 0, 0.175, 1) both;
+}
+
+/* ── Bounce In ── */
+.anim-bounce-in {
+  animation: bounceIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+/* ── Bounce Out ── */
+.anim-bounce-out {
+  animation: bounceOut 0.35s cubic-bezier(0.55, 0, 1, 0.45) both;
+}
+
+/* ── Coffee rise ── */
+.anim-coffee-rise {
+  animation: coffeeRise 1.5s ease-out both;
+}
+
+/* ── Steam variants ── */
+.anim-steam-1 {
+  animation: steamRise 2.5s ease-out infinite;
+}
+.anim-steam-2 {
+  animation: steamRise2 3s ease-out 0.8s infinite;
+}
+.anim-steam-3 {
+  animation: steamRise 2.8s ease-out 1.6s infinite;
+}
+
+/* ── Confetti ── */
+.anim-confetti-fall {
+  animation: confettiFall 2.5s ease-in both,
+             confettiSway 1.2s ease-in-out infinite;
+}
+
+/* ── Wiggle ── */
+.anim-wiggle {
+  animation: wiggle 0.4s ease-in-out;
+}
+
+/* ── Delay utilities ── */
+.anim-delay-100 { animation-delay: 100ms; }
+.anim-delay-200 { animation-delay: 200ms; }
+.anim-delay-300 { animation-delay: 300ms; }
+.anim-delay-400 { animation-delay: 400ms; }
+.anim-delay-500 { animation-delay: 500ms; }
+.anim-delay-600 { animation-delay: 600ms; }
+.anim-delay-700 { animation-delay: 700ms; }
+.anim-delay-800 { animation-delay: 800ms; }
+.anim-delay-900 { animation-delay: 900ms; }
+.anim-delay-1000 { animation-delay: 1000ms; }
+.anim-delay-1200 { animation-delay: 1200ms; }
+.anim-delay-1500 { animation-delay: 1500ms; }
+
+/* ── Reduced motion override ── */
+@media (prefers-reduced-motion: reduce) {
+  [class*="anim-"] {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+    filter: none !important;
+    clip-path: none !important;
+  }
+}

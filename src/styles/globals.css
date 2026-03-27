@@ -1,0 +1,523 @@
+/* ============================================================
+   GLOBALS.CSS
+   Load order: 1) Tailwind config bridge  2) CSS reset
+               3) Custom properties       4) Base styles
+               5) Scrollbar              6) Selection
+               7) Utility overrides
+   ============================================================ */
+
+/* ── Tailwind v4: load theme from legacy config ── */
+@config "../../tailwind.config.js";
+
+/* ── Tailwind layers ── */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Import animation keyframes ── */
+@import "./animations.css";
+
+/* ============================================================
+   1. CSS CUSTOM PROPERTIES
+   Mirrors every custom Tailwind color as a CSS variable so
+   GSAP / vanilla JS can read them at runtime.
+   ============================================================ */
+:root {
+  /* Dark palette */
+  --color-bg-void:     #0a0a0f;
+  --color-bg-deep:     #0d1117;
+  --color-bg-surface:  #161b22;
+  --color-bg-border:   #21262d;
+
+  /* Neon accents */
+  --color-neon-green:  #00ff88;
+  --color-neon-blue:   #00d4ff;
+  --color-neon-purple: #bd93f9;
+  --color-neon-red:    #ff5555;
+  --color-neon-yellow: #f1fa8c;
+
+  /* Coffee palette */
+  --color-coffee-dark:   #2c1810;
+  --color-coffee-mid:    #6f4e37;
+  --color-coffee-light:  #c8a882;
+  --color-coffee-cream:  #f5e6d3;
+  --color-coffee-amber:  #d4a017;
+
+  /* Typography scale */
+  --font-space:  "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-mono:   "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --font-inter:  "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  /* Spacing / layout tokens */
+  --section-padding-x: clamp(1.25rem, 5vw, 6rem);
+  --section-padding-y: clamp(4rem, 10vh, 8rem);
+
+  /* Transition tokens */
+  --transition-fast:    150ms ease;
+  --transition-base:    300ms ease;
+  --transition-slow:    600ms ease;
+  --transition-spring:  500ms cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Z-index scale */
+  --z-base:       0;
+  --z-raised:     10;
+  --z-dropdown:   20;
+  --z-sticky:     30;
+  --z-overlay:    40;
+  --z-modal:      50;
+  --z-navbar:     60;
+  --z-progress:   70;
+  --z-toast:      80;
+  --z-cursor:     90;
+
+  /* Scrollbar */
+  --scrollbar-width: 6px;
+  --scrollbar-track: var(--color-bg-deep);
+  --scrollbar-thumb: var(--color-bg-border);
+  --scrollbar-hover: var(--color-neon-green);
+}
+
+/* ============================================================
+   2. MINIMAL RESET  (extends Tailwind's preflight)
+   ============================================================ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  /* Smooth scroll — overridden per-section via JS for GSAP lenis/native */
+  scroll-behavior: smooth;
+
+  /* Full viewport height ensures GSAP ScrollTrigger gets correct bounds */
+  height: 100%;
+
+  /* Prevent horizontal overflow from animation overflow artifacts */
+  overflow-x: hidden;
+
+  /* Font rendering */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  height: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+
+  /* Base type settings */
+  font-family: var(--font-inter);
+  font-size: 1rem;
+  line-height: 1.6;
+  font-weight: 400;
+
+  /* Dark background before React mounts (mirrors index.html inline style) */
+  background-color: var(--color-bg-void);
+  color: #e6edf3;
+
+  /* Crisp font rendering on dark backgrounds */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Prevent rubber-band scroll on iOS from exposing white overscroll */
+  overscroll-behavior: none;
+}
+
+#root {
+  height: 100%;
+  isolation: isolate;
+  position: relative;
+}
+
+/* ============================================================
+   3. TYPOGRAPHY DEFAULTS
+   ============================================================ */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-space);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: #f0f6fc;
+}
+
+code,
+kbd,
+samp,
+pre {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+}
+
+pre {
+  overflow-x: auto;
+  white-space: pre;
+}
+
+a {
+  color: var(--color-neon-blue);
+  text-decoration: none;
+  transition: color var(--transition-fast), opacity var(--transition-fast);
+}
+
+a:hover {
+  color: var(--color-neon-green);
+  opacity: 0.9;
+}
+
+a:focus-visible {
+  outline: 2px solid var(--color-neon-green);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+img,
+svg,
+video,
+canvas {
+  display: block;
+  max-width: 100%;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: inherit;
+}
+
+button:focus-visible,
+[role="button"]:focus-visible {
+  outline: 2px solid var(--color-neon-green);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Remove list styles when list has role="list" (accessibility pattern) */
+ul[role="list"],
+ol[role="list"] {
+  list-style: none;
+}
+
+/* ============================================================
+   4. CUSTOM SCROLLBAR
+   Thin, dark — matches IDE aesthetic
+   ============================================================ */
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+}
+
+/* WebKit / Blink */
+::-webkit-scrollbar {
+  width: var(--scrollbar-width);
+  height: var(--scrollbar-width);
+}
+
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-thumb);
+  border-radius: 9999px;
+  border: 1px solid var(--scrollbar-track);
+  transition: background-color var(--transition-fast);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--scrollbar-hover);
+  box-shadow: 0 0 8px rgba(0, 255, 136, 0.5);
+}
+
+::-webkit-scrollbar-corner {
+  background: var(--scrollbar-track);
+}
+
+/* ============================================================
+   5. SELECTION STYLING
+   ============================================================ */
+::selection {
+  background-color: rgba(0, 255, 136, 0.25);
+  color: #ffffff;
+  text-shadow: none;
+}
+
+::-moz-selection {
+  background-color: rgba(0, 255, 136, 0.25);
+  color: #ffffff;
+}
+
+/* ============================================================
+   6. FOCUS STYLES
+   Visible only for keyboard users (not mouse/touch)
+   ============================================================ */
+:focus {
+  outline: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-neon-green);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ============================================================
+   7. SECTION LAYOUT UTILITIES
+   ============================================================ */
+.section-base {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  padding: var(--section-padding-y) var(--section-padding-x);
+}
+
+.section-full {
+  min-height: 100vh;
+}
+
+.container-narrow {
+  max-width: 64rem;     /* 1024px */
+  margin-inline: auto;
+  width: 100%;
+}
+
+.container-wide {
+  max-width: 90rem;     /* 1440px */
+  margin-inline: auto;
+  width: 100%;
+}
+
+/* ============================================================
+   8. GLASSMORPHISM CARD  (used across sections)
+   ============================================================ */
+.glass-card {
+  background: rgba(13, 17, 23, 0.7);
+  backdrop-filter: blur(12px) saturate(150%);
+  -webkit-backdrop-filter: blur(12px) saturate(150%);
+  border: 1px solid rgba(33, 38, 45, 0.8);
+  border-radius: 0.75rem;
+}
+
+.glass-card-neon {
+  background: rgba(10, 10, 15, 0.8);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(0, 255, 136, 0.15);
+  border-radius: 0.75rem;
+  box-shadow:
+    0 0 0 1px rgba(0, 255, 136, 0.05),
+    inset 0 1px 0 rgba(0, 255, 136, 0.07);
+}
+
+/* ============================================================
+   9. NEON TEXT UTILITIES
+   ============================================================ */
+.text-glow-green {
+  color: var(--color-neon-green);
+  text-shadow:
+    0 0 10px rgba(0, 255, 136, 0.8),
+    0 0 30px rgba(0, 255, 136, 0.4),
+    0 0 60px rgba(0, 255, 136, 0.2);
+}
+
+.text-glow-blue {
+  color: var(--color-neon-blue);
+  text-shadow:
+    0 0 10px rgba(0, 212, 255, 0.8),
+    0 0 30px rgba(0, 212, 255, 0.4),
+    0 0 60px rgba(0, 212, 255, 0.2);
+}
+
+.text-glow-purple {
+  color: var(--color-neon-purple);
+  text-shadow:
+    0 0 10px rgba(189, 147, 249, 0.8),
+    0 0 30px rgba(189, 147, 249, 0.4),
+    0 0 60px rgba(189, 147, 249, 0.2);
+}
+
+.text-glow-red {
+  color: var(--color-neon-red);
+  text-shadow:
+    0 0 10px rgba(255, 85, 85, 0.9),
+    0 0 30px rgba(255, 85, 85, 0.5),
+    0 0 70px rgba(255, 85, 85, 0.25);
+}
+
+.text-glow-amber {
+  color: var(--color-coffee-amber);
+  text-shadow:
+    0 0 10px rgba(212, 160, 23, 0.8),
+    0 0 30px rgba(212, 160, 23, 0.4),
+    0 0 60px rgba(212, 160, 23, 0.2);
+}
+
+/* ============================================================
+   10. TYPEWRITER CURSOR
+   ============================================================ */
+.typewriter-cursor::after {
+  content: "▋";
+  display: inline-block;
+  color: var(--color-neon-green);
+  animation: cursorBlink 1s step-end infinite;
+  margin-left: 2px;
+  font-weight: 400;
+}
+
+/* ============================================================
+   11. CRT SCANLINE OVERLAY
+   Applied as ::after on a positioned parent
+   ============================================================ */
+.crt-overlay {
+  position: relative;
+}
+
+.crt-overlay::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.12) 2px,
+    rgba(0, 0, 0, 0.12) 4px
+  );
+  pointer-events: none;
+  z-index: 1;
+  animation: scanline 8s linear infinite;
+}
+
+/* ============================================================
+   12. MATRIX RAIN BACKGROUND CANVAS
+   ============================================================ */
+.matrix-bg {
+  position: absolute;
+  inset: 0;
+  opacity: 0.08;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ============================================================
+   13. CODE SYNTAX HIGHLIGHT TOKENS
+   (used in Section 1 typewriter + Section 6 clean code)
+   ============================================================ */
+.token-keyword  { color: #ff79c6; }   /* pink  — keywords */
+.token-string   { color: #f1fa8c; }   /* yellow — strings */
+.token-function { color: #50fa7b; }   /* green  — functions */
+.token-comment  { color: #6272a4; font-style: italic; } /* muted — comments */
+.token-number   { color: #bd93f9; }   /* purple — numbers */
+.token-tag      { color: #ff5555; }   /* red    — HTML tags */
+.token-attr     { color: #50fa7b; }   /* green  — attributes */
+.token-value    { color: #f1fa8c; }   /* yellow — values */
+.token-operator { color: #ff79c6; }   /* pink   — operators */
+.token-punctuation { color: #f8f8f2; } /* white  — punctuation */
+
+/* ============================================================
+   14. TERMINAL STYLES
+   ============================================================ */
+.terminal-window {
+  background: #0d1117;
+  border: 1px solid #21262d;
+  border-radius: 0.625rem;
+  overflow: hidden;
+  font-family: var(--font-mono);
+  font-size: clamp(0.75rem, 1.5vw, 0.875rem);
+}
+
+.terminal-titlebar {
+  background: #161b22;
+  padding: 0.625rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-bottom: 1px solid #21262d;
+}
+
+.terminal-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.terminal-dot-red    { background: #ff5f57; }
+.terminal-dot-yellow { background: #ffbd2e; }
+.terminal-dot-green  { background: #28c840; }
+
+.terminal-body {
+  padding: 1rem 1.25rem;
+  min-height: 180px;
+  color: #c9d1d9;
+  line-height: 1.7;
+}
+
+.terminal-prompt {
+  color: var(--color-neon-green);
+  user-select: none;
+}
+
+.terminal-command {
+  color: #e6edf3;
+}
+
+.terminal-output-error {
+  color: var(--color-neon-red);
+}
+
+.terminal-output-warning {
+  color: var(--color-neon-yellow);
+}
+
+.terminal-output-success {
+  color: var(--color-neon-green);
+}
+
+.terminal-output-muted {
+  color: #6e7681;
+}
+
+/* ============================================================
+   15. REDUCED MOTION — override all transitions/animations
+   Everything else respects this via the `motion-safe:` and
+   `motion-reduce:` Tailwind variants in components.
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .crt-overlay::after {
+    animation: none;
+  }
+
+  .typewriter-cursor::after {
+    animation: none;
+    opacity: 1;
+  }
+}
+
+/* ============================================================
+   16. PRINT STYLES
+   ============================================================ */
+@media print {
+  *,
+  *::before,
+  *::after {
+    background: white !important;
+    color: black !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+}

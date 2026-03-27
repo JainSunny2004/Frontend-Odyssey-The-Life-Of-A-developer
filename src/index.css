@@ -1,0 +1,636 @@
+/* ============================================================
+   IMPORTS
+   ============================================================ */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   CSS CUSTOM PROPERTIES
+   Referenced via var(--color-*) in inline styles throughout
+   ============================================================ */
+:root {
+    /* Neon */
+    --color-neon-green: #00ff88;
+    --color-neon-red: #ff5555;
+    --color-neon-yellow: #f1fa8c;
+    --color-neon-purple: #bd93f9;
+    --color-neon-blue: #00d4ff;
+    --color-neon-pink: #ff79c6;
+    --color-neon-orange: #ffb86c;
+
+    /* Coffee */
+    --color-coffee-amber: #d4a017;
+    --color-coffee-cream: #f5e6d3;
+    --color-coffee-light: #c8a882;
+    --color-coffee-mid: #8b6347;
+    --color-coffee-dark: #2c1810;
+    --color-coffee-deeper: #1c0e08;
+
+    /* Backgrounds */
+    --color-bg-void: #0a0a0f;
+    --color-bg-surface: #0d1117;
+    --color-bg-deep: #080810;
+    --color-bg-border: #1e2030;
+
+    /* Scroll behavior */
+    scroll-behavior: smooth;
+}
+
+/* ============================================================
+   BASE LAYER
+   ============================================================ */
+@layer base {
+
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+    }
+
+    html {
+        scroll-behavior: smooth;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-rendering: optimizeLegibility;
+    }
+
+    body {
+        background-color: var(--color-bg-void);
+        color: #f0f6fc;
+        font-family: 'Inter', system-ui, sans-serif;
+        overflow-x: hidden;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Selection */
+    ::selection {
+        background-color: rgba(189, 147, 249, 0.3);
+        color: #f0f6fc;
+    }
+
+    /* Focus ring — global */
+    :focus-visible {
+        outline: 2px solid var(--color-neon-purple);
+        outline-offset: 3px;
+        border-radius: 4px;
+    }
+
+    /* Scrollbar — WebKit */
+    ::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: var(--color-bg-void);
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: rgba(30, 32, 48, 0.8);
+        border-radius: 99px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: rgba(189, 147, 249, 0.3);
+    }
+
+    /* Scrollbar — Firefox */
+    * {
+        scrollbar-width: thin;
+        scrollbar-color: rgba(30, 32, 48, 0.8) var(--color-bg-void);
+    }
+}
+
+/* ============================================================
+   KEYFRAMES
+   ============================================================ */
+
+/* Error messages falling — Phase 3 */
+@keyframes errorRain {
+    0% {
+        transform: translateY(-60px);
+        opacity: 0;
+    }
+
+    8% {
+        opacity: 1;
+    }
+
+    88% {
+        opacity: 0.8;
+    }
+
+    100% {
+        transform: translateY(110vh);
+        opacity: 0;
+    }
+}
+
+/* Generic neon pulse — opacity breathe */
+@keyframes neonPulse {
+
+    0%,
+    100% {
+        opacity: 0.4;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+/* Fast neon pulse — for urgency indicators */
+@keyframes neonPulseFast {
+
+    0%,
+    100% {
+        opacity: 0.5;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+/* Horizontal shake — used on .anim-shake */
+@keyframes shake {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    10% {
+        transform: translateX(-8px);
+    }
+
+    20% {
+        transform: translateX(8px);
+    }
+
+    30% {
+        transform: translateX(-6px);
+    }
+
+    40% {
+        transform: translateX(6px);
+    }
+
+    50% {
+        transform: translateX(-4px);
+    }
+
+    60% {
+        transform: translateX(4px);
+    }
+
+    70% {
+        transform: translateX(-2px);
+    }
+
+    80% {
+        transform: translateX(2px);
+    }
+
+    90% {
+        transform: translateX(-1px);
+    }
+}
+
+/* CRT flicker — used on .anim-flicker */
+@keyframes flicker {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    41.99% {
+        opacity: 1;
+    }
+
+    42% {
+        opacity: 0.6;
+    }
+
+    43% {
+        opacity: 1;
+    }
+
+    60% {
+        opacity: 1;
+    }
+
+    60.5% {
+        opacity: 0.5;
+    }
+
+    61% {
+        opacity: 1;
+    }
+
+    85% {
+        opacity: 1;
+    }
+
+    85.5% {
+        opacity: 0.75;
+    }
+
+    86% {
+        opacity: 1;
+    }
+}
+
+/* RGB chromatic aberration shift — used on .anim-rgb-shift */
+@keyframes rgbShift {
+
+    0%,
+    100% {
+        filter: none;
+        transform: translate(0, 0);
+    }
+
+    20% {
+        filter: drop-shadow(-3px 0 0 rgba(255, 85, 85, 0.7)) drop-shadow(3px 0 0 rgba(0, 212, 255, 0.7));
+        transform: translate(-2px, 0);
+    }
+
+    40% {
+        filter: drop-shadow(3px 0 0 rgba(255, 85, 85, 0.7)) drop-shadow(-3px 0 0 rgba(0, 212, 255, 0.7));
+        transform: translate(2px, 0);
+    }
+
+    60% {
+        filter: drop-shadow(-1px 0 0 rgba(255, 79, 198, 0.6)) drop-shadow(1px 0 0 rgba(0, 212, 255, 0.6));
+        transform: translate(-1px, 1px);
+    }
+
+    80% {
+        filter: drop-shadow(2px 0 0 rgba(255, 85, 85, 0.5)) drop-shadow(-2px 0 0 rgba(0, 212, 255, 0.5));
+        transform: translate(1px, 0);
+    }
+}
+
+/* Neon border pulse — used on .anim-neon-border */
+@keyframes neonBorderAnim {
+
+    0%,
+    100% {
+        box-shadow: 0 0 8px rgba(189, 147, 249, 0.3);
+    }
+
+    50% {
+        box-shadow: 0 0 20px rgba(189, 147, 249, 0.7), 0 0 40px rgba(189, 147, 249, 0.2);
+    }
+}
+
+/* Typewriter cursor blink */
+@keyframes cursorBlink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+}
+
+/* Scanline scroll */
+@keyframes scanline {
+    0% {
+        background-position: 0 0;
+    }
+
+    100% {
+        background-position: 0 100%;
+    }
+}
+
+/* ============================================================
+   COMPONENT LAYER
+   Reusable structural components used across all sections
+   ============================================================ */
+@layer components {
+
+    /* ── Glass Card ── */
+    .glass-card {
+        background: rgba(13, 17, 23, 0.72);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+        border: 1px solid rgba(255, 255, 255, 0.07);
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.35),
+            inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    }
+
+    .glass-card-neon {
+        background: rgba(13, 17, 23, 0.82);
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+        border: 1px solid rgba(255, 255, 255, 0.09);
+        box-shadow: 0 4px 32px rgba(0, 0, 0, 0.45),
+            inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    }
+
+    /* ── Container ── */
+    .container-wide {
+        width: 100%;
+        max-width: 1440px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    /* ── Terminal Window ── */
+    .terminal-window {
+        background: #0d1117;
+        border: 1px solid rgba(30, 32, 48, 0.9);
+        border-radius: 0.75rem;
+        overflow: hidden;
+        font-family: 'JetBrains Mono', 'Cascadia Code', 'Fira Code', monospace;
+    }
+
+    .terminal-titlebar {
+        display: flex;
+        align-items: center;
+        gap: 0.375rem;
+        padding: 0.6rem 0.875rem;
+        background: rgba(20, 22, 32, 0.7);
+        border-bottom: 1px solid rgba(30, 32, 48, 0.9);
+        user-select: none;
+    }
+
+    .terminal-dot {
+        width: 0.625rem;
+        height: 0.625rem;
+        border-radius: 50%;
+        flex-shrink: 0;
+    }
+
+    .terminal-dot-red {
+        background: #ff5555;
+        opacity: 0.85;
+    }
+
+    .terminal-dot-yellow {
+        background: #f1fa8c;
+        opacity: 0.85;
+    }
+
+    .terminal-dot-green {
+        background: #00ff88;
+        opacity: 0.85;
+    }
+
+    .terminal-body {
+        padding: 1rem;
+        color: rgba(240, 246, 252, 0.72);
+        font-size: 0.75rem;
+        line-height: 1.75;
+    }
+
+    /* ── Terminal text roles ── */
+    .terminal-prompt {
+        color: rgba(0, 255, 136, 0.7);
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.75rem;
+        user-select: none;
+        flex-shrink: 0;
+    }
+
+    .terminal-command {
+        color: rgba(240, 246, 252, 0.9);
+        font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* ── Terminal output variants ── */
+    .terminal-output-error {
+        color: rgba(255, 85, 85, 0.85);
+    }
+
+    .terminal-output-warning {
+        color: rgba(241, 250, 140, 0.75);
+    }
+
+    .terminal-output-success {
+        color: rgba(0, 255, 136, 0.8);
+    }
+
+    .terminal-output-muted {
+        color: rgba(240, 246, 252, 0.3);
+    }
+
+    /* ── Thin scrollbar for terminal body ── */
+    .scrollbar-thin {
+        scrollbar-width: thin;
+        scrollbar-color: rgba(30, 32, 48, 0.8) transparent;
+    }
+
+    .scrollbar-thin::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    .scrollbar-thin::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    .scrollbar-thin::-webkit-scrollbar-thumb {
+        background: rgba(30, 32, 48, 0.8);
+        border-radius: 99px;
+    }
+
+
+    /* ── Syntax Tokens ── */
+    .token-keyword {
+        color: #bd93f9;
+    }
+
+    .token-string {
+        color: #f1fa8c;
+    }
+
+    .token-value {
+        color: #ff79c6;
+    }
+
+    .token-comment {
+        color: rgba(240, 246, 252, 0.28);
+        font-style: italic;
+    }
+
+    .token-punctuation {
+        color: rgba(240, 246, 252, 0.45);
+    }
+
+    .token-function {
+        color: #00d4ff;
+    }
+
+    .token-number {
+        color: #ffb86c;
+    }
+
+    .token-operator {
+        color: #ff5555;
+    }
+
+    .token-property {
+        color: #8be9fd;
+    }
+
+    .token-class {
+        color: #00ff88;
+    }
+
+    /* ── Typewriter Cursor ── */
+    .typewriter-cursor::after {
+        content: '▮';
+        display: inline-block;
+        margin-left: 2px;
+        color: var(--color-neon-green);
+        animation: cursorBlink 1s step-end infinite;
+    }
+
+    /* ── CRT Overlay — scanlines ── */
+    .crt-overlay {
+        background: repeating-linear-gradient(0deg,
+                transparent,
+                transparent 2px,
+                rgba(0, 0, 0, 0.08) 2px,
+                rgba(0, 0, 0, 0.08) 4px);
+        pointer-events: none;
+    }
+}
+
+/* ============================================================
+   UTILITY LAYER
+   Single-purpose animation & glow utilities
+   ============================================================ */
+@layer utilities {
+
+    /* ── Animations ── */
+    .anim-neon-pulse {
+        animation: neonPulse 2.5s ease-in-out infinite;
+    }
+
+    .anim-neon-pulse-fast {
+        animation: neonPulseFast 1s ease-in-out infinite;
+    }
+
+    .anim-flicker {
+        animation: flicker 4s linear infinite;
+    }
+
+    .anim-rgb-shift {
+        animation: rgbShift 0.4s steps(4) forwards;
+    }
+
+    .anim-shake {
+        animation: shake 0.65s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+        transform-origin: center;
+    }
+
+    .anim-neon-border {
+        animation: neonBorderAnim 2.5s ease-in-out infinite;
+    }
+
+    /* ── Text Glow ── */
+    .text-glow-red {
+        text-shadow:
+            0 0 10px rgba(255, 85, 85, 0.9),
+            0 0 30px rgba(255, 85, 85, 0.4),
+            0 0 60px rgba(255, 85, 85, 0.15);
+    }
+
+    .text-glow-green {
+        text-shadow:
+            0 0 10px rgba(0, 255, 136, 0.9),
+            0 0 30px rgba(0, 255, 136, 0.4),
+            0 0 60px rgba(0, 255, 136, 0.15);
+    }
+
+    .text-glow-purple {
+        text-shadow:
+            0 0 10px rgba(189, 147, 249, 0.9),
+            0 0 30px rgba(189, 147, 249, 0.4),
+            0 0 60px rgba(189, 147, 249, 0.15);
+    }
+
+    .text-glow-blue {
+        text-shadow:
+            0 0 10px rgba(0, 212, 255, 0.9),
+            0 0 30px rgba(0, 212, 255, 0.4),
+            0 0 60px rgba(0, 212, 255, 0.15);
+    }
+
+    .text-glow-amber {
+        text-shadow:
+            0 0 10px rgba(212, 160, 23, 0.9),
+            0 0 30px rgba(212, 160, 23, 0.4),
+            0 0 60px rgba(212, 160, 23, 0.15);
+    }
+
+    /* ── Gradient text shorthand ── */
+    .text-gradient-neon {
+        background: linear-gradient(135deg, #00ff88, #00d4ff, #bd93f9);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .text-gradient-gold {
+        background: linear-gradient(135deg, #f5e6d3 0%, #d4a017 40%, #c8a882 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    /* ── Perspective utility ── */
+    .perspective-1000 {
+        perspective: 1000px;
+    }
+
+    .perspective-1500 {
+        perspective: 1500px;
+    }
+
+    /* ── Will-change hints ── */
+    .will-change-transform {
+        will-change: transform;
+    }
+
+    .will-change-opacity {
+        will-change: opacity;
+    }
+}
+
+/* ============================================================
+   REDUCED MOTION — global override
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    .anim-neon-pulse,
+    .anim-neon-pulse-fast,
+    .anim-flicker,
+    .anim-rgb-shift,
+    .anim-shake,
+    .anim-neon-border {
+        animation: none !important;
+    }
+
+    .typewriter-cursor::after {
+        animation: none !important;
+        opacity: 1;
+    }
+}

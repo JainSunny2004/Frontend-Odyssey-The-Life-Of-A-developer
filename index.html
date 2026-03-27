@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- SEO -->
+    <title>Frontend Odyssey — The Life of a Developer</title>
+    <meta
+      name="description"
+      content="An interactive scrollytelling journey through the life of a developer: from tutorial hell to senior enlightenment. Built with React, GSAP, Three.js."
+    />
+    <meta name="theme-color" content="#0a0a0f" />
+
+    <!-- Open Graph -->
+    <meta property="og:title"       content="Frontend Odyssey" />
+    <meta property="og:description" content="The Life of a Developer — an interactive scroll experience." />
+    <meta property="og:type"        content="website" />
+
+    <!-- Fonts — preconnect for perf -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Prevent FOUC -->
+    <style>
+      html { background-color: #0a0a0f; }
+      body { margin: 0; overflow-x: hidden; }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
