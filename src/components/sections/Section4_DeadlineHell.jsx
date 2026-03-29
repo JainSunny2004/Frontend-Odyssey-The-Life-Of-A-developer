@@ -18,115 +18,115 @@ gsap.registerPlugin(ScrollTrigger)
 
 const COMMITS = [
   {
-    time: '9:00 AM',
-    hash: 'f3a1b2c',
+    time:    '9:00 AM',
+    hash:    'f3a1b2c',
     message: 'Initial commit',
-    mood: 'calm',
-    icon: '🌅',
-    sub: 'Full of hope. Coffee #1.',
+    mood:    'calm',
+    icon:    '🌅',
+    sub:     'Full of hope. Coffee #1.',
   },
   {
-    time: '11:30 AM',
-    hash: 'a4d7e8f',
+    time:    '11:30 AM',
+    hash:    'a4d7e8f',
     message: 'added feature',
-    mood: 'calm',
-    icon: '☕',
-    sub: 'Going well. Coffee #2.',
+    mood:    'calm',
+    icon:    '☕',
+    sub:     'Going well. Coffee #2.',
   },
   {
-    time: '2:00 PM',
-    hash: 'b9c2d3e',
+    time:    '2:00 PM',
+    hash:    'b9c2d3e',
     message: 'added feature (actually this time)',
-    mood: 'stressed',
-    icon: '🤔',
-    sub: '"Small change" has 47 dependencies.',
+    mood:    'stressed',
+    icon:    '🤔',
+    sub:     '"Small change" has 47 dependencies.',
   },
   {
-    time: '5:45 PM',
-    hash: 'c1e4f5a',
+    time:    '5:45 PM',
+    hash:    'c1e4f5a',
     message: 'fixes',
-    mood: 'stressed',
-    icon: '😰',
-    sub: 'Scope creep achieved sentience.',
+    mood:    'stressed',
+    icon:    '😰',
+    sub:     'Scope creep achieved sentience.',
   },
   {
-    time: '8:30 PM',
-    hash: 'd2f6a7b',
+    time:    '8:30 PM',
+    hash:    'd2f6a7b',
     message: 'more fixes',
-    mood: 'stressed',
-    icon: '🍕',
-    sub: 'Ordered pizza. Ate it cold.',
+    mood:    'stressed',
+    icon:    '🍕',
+    sub:     'Ordered pizza. Ate it cold.',
   },
   {
-    time: '11:00 PM',
-    hash: 'e3a8b9c',
+    time:    '11:00 PM',
+    hash:    'e3a8b9c',
     message: 'pls work',
-    mood: 'panicked',
-    icon: '😱',
-    sub: 'Talking to the computer. It ignores you.',
+    mood:    'panicked',
+    icon:    '😱',
+    sub:     'Talking to the computer. It ignores you.',
   },
   {
-    time: '2:00 AM',
-    hash: 'f4b1c2d',
+    time:    '2:00 AM',
+    hash:    'f4b1c2d',
     message: 'why god why',
-    mood: 'panicked',
-    icon: '☠️',
-    sub: 'CSS decided to have opinions.',
+    mood:    'panicked',
+    icon:    '☠️',
+    sub:     'CSS decided to have opinions.',
   },
   {
-    time: '4:58 AM',
-    hash: 'a5c3d4e',
+    time:    '4:58 AM',
+    hash:    'a5c3d4e',
     message: 'FINAL_v3_ACTUALLY_FINAL_FOR_REAL',
-    mood: 'panicked',
-    icon: '🔥',
-    sub: 'This is the one. It has to be.',
+    mood:    'panicked',
+    icon:    '🔥',
+    sub:     'This is the one. It has to be.',
   },
   {
-    time: '5:00 AM',
-    hash: 'b6d4e5f',
+    time:    '5:00 AM',
+    hash:    'b6d4e5f',
     message: 'revert: everything is broken',
-    mood: 'panicked',
-    icon: '💀',
-    sub: 'git log will remember this forever.',
+    mood:    'panicked',
+    icon:    '💀',
+    sub:     'git log will remember this forever.',
   },
 ]
 
 const MOOD_STYLES = {
-  calm: {
-    dot: 'bg-neon-green',
-    text: 'text-neon-green',
+  calm:     {
+    dot:    'bg-neon-green',
+    text:   'text-neon-green',
     border: 'border-neon-green/25',
-    bg: 'bg-neon-green/8',
-    line: 'rgba(0,255,136,0.4)',
+    bg:     'bg-neon-green/8',
+    line:   'rgba(0,255,136,0.4)',
   },
   stressed: {
-    dot: 'bg-neon-yellow',
-    text: 'text-neon-yellow',
+    dot:    'bg-neon-yellow',
+    text:   'text-neon-yellow',
     border: 'border-neon-yellow/25',
-    bg: 'bg-neon-yellow/8',
-    line: 'rgba(241,250,140,0.4)',
+    bg:     'bg-neon-yellow/8',
+    line:   'rgba(241,250,140,0.4)',
   },
   panicked: {
-    dot: 'bg-neon-red',
-    text: 'text-neon-red',
+    dot:    'bg-neon-red',
+    text:   'text-neon-red',
     border: 'border-neon-red/25',
-    bg: 'bg-neon-red/8',
-    line: 'rgba(255,85,85,0.4)',
+    bg:     'bg-neon-red/8',
+    line:   'rgba(255,85,85,0.4)',
   },
 }
 
 const SLEEP_MILESTONES = [
-  { hours: 0, label: 'Just woke up', emoji: '😴' },
-  { hours: 8, label: 'Feeling productive', emoji: '💪' },
-  { hours: 16, label: 'Questionable decisions', emoji: '🤔' },
-  { hours: 24, label: 'Seeing code in dreams', emoji: '👁️' },
-  { hours: 32, label: 'Is this real?', emoji: '👻' },
-  { hours: 40, label: 'One with the machine', emoji: '🤖' },
+  { hours: 0,  label: 'Just woke up',           emoji: '😴' },
+  { hours: 8,  label: 'Feeling productive',      emoji: '💪' },
+  { hours: 16, label: 'Questionable decisions',  emoji: '🤔' },
+  { hours: 24, label: 'Seeing code in dreams',   emoji: '👁️'  },
+  { hours: 32, label: 'Is this real?',           emoji: '👻' },
+  { hours: 40, label: 'One with the machine',    emoji: '🤖' },
 ]
 
 const ENERGY_DRINK_LABELS = [
   'Monster', 'Red Bull', 'Celsius', 'Ghost',
-  'Reign', '5-hour', 'NOS', 'Rockstar',
+  'Reign',   '5-hour',  'NOS',     'Rockstar',
 ]
 
 /* ============================================================
@@ -134,11 +134,11 @@ const ENERGY_DRINK_LABELS = [
    Hands spin progressively faster as commit desperation rises.
    ============================================================ */
 function AnimatedClock({ speedMultiplier = 1 }) {
-  const hourRef = useRef(null)
+  const hourRef   = useRef(null)
   const minuteRef = useRef(null)
   const secondRef = useRef(null)
-  const rafRef = useRef(null)
-  const startRef = useRef(Date.now())
+  const rafRef    = useRef(null)
+  const startRef  = useRef(Date.now())
   const prefersReduced = useReducedMotion()
 
   useEffect(() => {
@@ -147,16 +147,16 @@ function AnimatedClock({ speedMultiplier = 1 }) {
     // Base: 1 real second = 1 sim-second. At speedMultiplier=10, time flies.
     const animate = () => {
       const elapsed = (Date.now() - startRef.current) / 1000
-      const speed = Math.pow(speedMultiplier, 2.5) // exponential acceleration
+      const speed   = Math.pow(speedMultiplier, 2.5) // exponential acceleration
 
       const totalSec = elapsed * speed
-      const sDeg = (totalSec % 60) * 6
-      const mDeg = (totalSec % 3600) * 0.1
-      const hDeg = (totalSec % 43200) * (360 / 43200)
+      const sDeg     = (totalSec % 60)          * 6
+      const mDeg     = (totalSec % 3600)         * 0.1
+      const hDeg     = (totalSec % 43200)        * (360 / 43200)
 
       if (secondRef.current) secondRef.current.style.transform = `rotate(${sDeg}deg)`
       if (minuteRef.current) minuteRef.current.style.transform = `rotate(${mDeg}deg)`
-      if (hourRef.current) hourRef.current.style.transform = `rotate(${hDeg}deg)`
+      if (hourRef.current)   hourRef.current.style.transform   = `rotate(${hDeg}deg)`
 
       rafRef.current = requestAnimationFrame(animate)
     }
@@ -281,8 +281,8 @@ function AnimatedClock({ speedMultiplier = 1 }) {
             opacity="0.6"
           >
             {speedMultiplier > 7 ? 'TIME DILATING' :
-              speedMultiplier > 4 ? 'PANIC MODE' :
-                'RUNNING LATE'}
+             speedMultiplier > 4 ? 'PANIC MODE' :
+             'RUNNING LATE'}
           </text>
         )}
       </svg>
@@ -304,7 +304,7 @@ function EnergyDrinkCan({ label, index, visible }) {
     { body: '#1a1a1a', stripe: '#8be9fd', text: '#8be9fd' },
     { body: '#2a1a1a', stripe: '#ffb86c', text: '#ffb86c' },
   ]
-  const c = colors[index % colors.length]
+  const c      = colors[index % colors.length]
   const tiltDeg = (index % 2 === 0 ? 1 : -1) * (index % 3) * 6
 
   return (
@@ -315,10 +315,10 @@ function EnergyDrinkCan({ label, index, visible }) {
         : { y: 60, opacity: 0, scale: 0.6 }
       }
       transition={{
-        delay: index * 0.12,
-        type: 'spring',
+        delay:    index * 0.12,
+        type:     'spring',
         stiffness: 240,
-        damping: 18,
+        damping:   18,
       }}
       className="relative flex-shrink-0"
       style={{ transform: `rotate(${tiltDeg}deg)` }}
@@ -396,9 +396,9 @@ function CanPile({ progress }) {
    SLEEP COUNTER
    ============================================================ */
 function SleepCounter({ targetHours, active }) {
-  const [current, setCurrent] = useState(0)
-  const rafRef = useRef(null)
-  const startRef = useRef(null)
+  const [current,  setCurrent]  = useState(0)
+  const rafRef     = useRef(null)
+  const startRef   = useRef(null)
   const prefersReduced = useReducedMotion()
 
   useEffect(() => {
@@ -409,9 +409,9 @@ function SleepCounter({ targetHours, active }) {
     startRef.current = performance.now()
 
     const animate = (now) => {
-      const elapsed = now - startRef.current
+      const elapsed  = now - startRef.current
       const progress = Math.min(elapsed / duration, 1)
-      const eased = 1 - Math.pow(1 - progress, 3)
+      const eased    = 1 - Math.pow(1 - progress, 3)
       setCurrent(Math.floor(eased * targetHours))
       if (progress < 1) {
         rafRef.current = requestAnimationFrame(animate)
@@ -427,11 +427,11 @@ function SleepCounter({ targetHours, active }) {
   const milestone = useMemo(() =>
     [...SLEEP_MILESTONES].reverse().find(m => current >= m.hours) ||
     SLEEP_MILESTONES[0],
-    [current])
+  [current])
 
   const dangerLevel = current > 30 ? 'text-neon-red' :
-    current > 20 ? 'text-neon-yellow' :
-      'text-neon-green'
+                      current > 20 ? 'text-neon-yellow' :
+                      'text-neon-green'
 
   return (
     <div
@@ -471,9 +471,10 @@ function SleepCounter({ targetHours, active }) {
         aria-hidden="true"
       >
         <motion.div
-          className={`h-full rounded-full ${current > 30 ? 'bg-neon-red' :
-              current > 20 ? 'bg-neon-yellow' : 'bg-neon-green'
-            }`}
+          className={`h-full rounded-full ${
+            current > 30 ? 'bg-neon-red' :
+            current > 20 ? 'bg-neon-yellow' : 'bg-neon-green'
+          }`}
           initial={{ width: '0%' }}
           animate={{ width: `${(current / targetHours) * 100}%` }}
           transition={{ duration: 0.1 }}
@@ -514,9 +515,9 @@ function CommitNode({ commit, index, isVisible, isLast }) {
         : { opacity: 0, x: -30 }
       }
       transition={{
-        delay: prefersReduced ? 0 : index * 0.1,
+        delay:    prefersReduced ? 0 : index * 0.1,
         duration: 0.5,
-        ease: [0.22, 1, 0.36, 1],
+        ease:     [0.22, 1, 0.36, 1],
       }}
       className="relative flex gap-4 sm:gap-5"
       role="listitem"
@@ -531,7 +532,7 @@ function CommitNode({ commit, index, isVisible, isLast }) {
             : { scale: 0, opacity: 0 }
           }
           transition={{
-            delay: prefersReduced ? 0 : index * 0.1 + 0.1,
+            delay:    prefersReduced ? 0 : index * 0.1 + 0.1,
             duration: 0.4,
           }}
           className={`
@@ -566,13 +567,13 @@ function CommitNode({ commit, index, isVisible, isLast }) {
             initial={{ scaleY: 0 }}
             animate={isVisible ? { scaleY: 1 } : { scaleY: 0 }}
             transition={{
-              delay: prefersReduced ? 0 : index * 0.1 + 0.2,
+              delay:    prefersReduced ? 0 : index * 0.1 + 0.2,
               duration: 0.4,
             }}
             style={{
-              background: `linear-gradient(to bottom, ${cfg.line}, rgba(255,255,255,0.05))`,
+              background:    `linear-gradient(to bottom, ${cfg.line}, rgba(255,255,255,0.05))`,
               transformOrigin: 'top',
-              minHeight: '2.5rem',
+              minHeight:     '2.5rem',
             }}
             aria-hidden="true"
           />
@@ -648,9 +649,9 @@ function CommitLog({ isVisible }) {
 function WindowView({ progress }) {
   // 0 = deep night (purple/black), 1 = pre-dawn orange/amber
   const skyColor = useMemo(() => {
-    const r = Math.round(10 + progress * 40)
-    const g = Math.round(10 + progress * 20)
-    const b = Math.round(25 + progress * 10)
+    const r = Math.round(10  + progress * 40)
+    const g = Math.round(10  + progress * 20)
+    const b = Math.round(25  + progress * 10)
     return `rgb(${r},${g},${b})`
   }, [progress])
 
@@ -683,16 +684,16 @@ function WindowView({ progress }) {
               key={i}
               className="absolute rounded-full bg-white"
               style={{
-                width: `${1 + (i % 3) * 0.5}px`,
-                height: `${1 + (i % 3) * 0.5}px`,
-                left: `${(i * 37 + 13) % 100}%`,
-                top: `${(i * 29 + 7) % 60}%`,
-                opacity: 0.4 + (i % 4) * 0.15,
+                width:     `${1 + (i % 3) * 0.5}px`,
+                height:    `${1 + (i % 3) * 0.5}px`,
+                left:      `${(i * 37 + 13) % 100}%`,
+                top:       `${(i * 29 + 7)  % 60}%`,
+                opacity:   0.4 + (i % 4) * 0.15,
                 animation: `neonPulse ${2 + (i % 3)}s ease-in-out ${i * 0.3}s infinite`,
               }}
             />
           )),
-          [])}
+        [])}
       </div>
 
       {/* City skyline silhouette */}
@@ -712,19 +713,19 @@ function WindowView({ progress }) {
         <rect x="0" y="50" width="400" height="30" fill="url(#horizonGlow)" />
 
         {/* Buildings */}
-        <rect x="0" y="30" width="30" height="50" fill="#0a0a0f" />
-        <rect x="35" y="50" width="20" height="30" fill="#0a0a0f" />
-        <rect x="60" y="20" width="25" height="60" fill="#0d1117" />
-        <rect x="90" y="40" width="18" height="40" fill="#0a0a0f" />
-        <rect x="115" y="15" width="35" height="65" fill="#0d1117" />
-        <rect x="155" y="35" width="22" height="45" fill="#0a0a0f" />
-        <rect x="185" y="25" width="28" height="55" fill="#0d1117" />
-        <rect x="220" y="45" width="16" height="35" fill="#0a0a0f" />
-        <rect x="242" y="18" width="40" height="62" fill="#0d1117" />
-        <rect x="288" y="38" width="24" height="42" fill="#0a0a0f" />
-        <rect x="318" y="28" width="30" height="52" fill="#0d1117" />
-        <rect x="355" y="42" width="20" height="38" fill="#0a0a0f" />
-        <rect x="380" y="22" width="20" height="58" fill="#0d1117" />
+        <rect x="0"   y="30" width="30"  height="50" fill="#0a0a0f" />
+        <rect x="35"  y="50" width="20"  height="30" fill="#0a0a0f" />
+        <rect x="60"  y="20" width="25"  height="60" fill="#0d1117" />
+        <rect x="90"  y="40" width="18"  height="40" fill="#0a0a0f" />
+        <rect x="115" y="15" width="35"  height="65" fill="#0d1117" />
+        <rect x="155" y="35" width="22"  height="45" fill="#0a0a0f" />
+        <rect x="185" y="25" width="28"  height="55" fill="#0d1117" />
+        <rect x="220" y="45" width="16"  height="35" fill="#0a0a0f" />
+        <rect x="242" y="18" width="40"  height="62" fill="#0d1117" />
+        <rect x="288" y="38" width="24"  height="42" fill="#0a0a0f" />
+        <rect x="318" y="28" width="30"  height="52" fill="#0d1117" />
+        <rect x="355" y="42" width="20"  height="38" fill="#0a0a0f" />
+        <rect x="380" y="22" width="20"  height="58" fill="#0d1117" />
 
         {/* Lit windows */}
         {[
@@ -877,18 +878,18 @@ function DeskScene({ scrollProgress, cansProgress }) {
    MAIN SECTION
    ============================================================ */
 export default function Section4_DeadlineHell() {
-  const sectionRef = useRef(null)
-  const heroRef = useRef(null)
-  const pinRef = useRef(null)
-  const timelineRef = useRef(null)
-  const counterRef = useRef(null)
+  const sectionRef    = useRef(null)
+  const heroRef       = useRef(null)
+  const pinRef        = useRef(null)
+  const timelineRef   = useRef(null)
+  const counterRef    = useRef(null)
 
-  const [scrollProgress, setScrollProgress] = useState(0)
-  const [clockSpeed, setClockSpeed] = useState(1)
-  const [cansProgress, setCansProgress] = useState(0)
-  const [sleepHours, setSleepHours] = useState(0)
-  const [counterActive, setCounterActive] = useState(false)
-  const [timelineVisible, setTimelineVisible] = useState(false)
+  const [scrollProgress,  setScrollProgress]  = useState(0)
+  const [clockSpeed,      setClockSpeed]       = useState(1)
+  const [cansProgress,    setCansProgress]     = useState(0)
+  const [sleepHours,      setSleepHours]       = useState(0)
+  const [counterActive,   setCounterActive]    = useState(false)
+  const [timelineVisible, setTimelineVisible]  = useState(false)
 
   const prefersReduced = useReducedMotion()
 
@@ -898,8 +899,8 @@ export default function Section4_DeadlineHell() {
 
     const tl = gsap.timeline({
       scrollTrigger: {
-        trigger: heroRef.current,
-        start: 'top 80%',
+        trigger:       heroRef.current,
+        start:         'top 80%',
         toggleActions: 'play none none reverse',
       },
     })
@@ -913,15 +914,15 @@ export default function Section4_DeadlineHell() {
     tl.from('.s4-eyebrow', {
       y: 30, opacity: 0, duration: 0.5, ease: 'power3.out',
     })
-      .from('.s4-headline', {
-        y: 50, opacity: 0, duration: 0.7, ease: 'power3.out',
-      }, '-=0.3')
-      .from('.s4-subtitle', {
-        y: 30, opacity: 0, duration: 0.6, ease: 'power3.out',
-      }, '-=0.4')
-      .from('.s4-irony', {
-        y: 20, opacity: 0, duration: 0.5, ease: 'power3.out',
-      }, '-=0.3')
+    .from('.s4-headline', {
+      y: 50, opacity: 0, duration: 0.7, ease: 'power3.out',
+    }, '-=0.3')
+    .from('.s4-subtitle', {
+      y: 30, opacity: 0, duration: 0.6, ease: 'power3.out',
+    }, '-=0.4')
+    .from('.s4-irony', {
+      y: 20, opacity: 0, duration: 0.5, ease: 'power3.out',
+    }, '-=0.3')
   }, sectionRef, [])
 
   /* ── GSAP: sticky pin — drives clock speed, cans, window ── */
@@ -940,22 +941,28 @@ export default function Section4_DeadlineHell() {
     let pinTrigger
 
     pinTrigger = ScrollTrigger.create({
-      trigger: pinRef.current,
-      start: 'top 80px',
-      end: () => `+=${window.innerHeight * 1.2}`,  // ✅ function = re-evaluated on refresh
-      pin: true,
+      trigger:    pinRef.current,
+      start:      'top 80px',
+      end:        () => `+=${window.innerHeight * 3}`,
+      pin:        true,
       pinSpacing: true,
-      anticipatePin: 1,           // ✅ prevents scroll jump on entry
-      invalidateOnRefresh: true,     // ✅ recalculates on resize / after lazy load
+      anticipatePin: 1,
       onUpdate: (self) => {
-        setClockSpeed(1 + self.progress * 9)
-        setScrollProgress(self.progress)           // ← was never set during scroll
-        setCansProgress(self.progress)             // ← was never set during scroll
-        setSleepHours(Math.round(self.progress * 36))  // ← 0 → 36 hours as you scroll
-      },
-      onEnter: () => {
-        setTimelineVisible(true)   // ← trigger timeline on section enter
-        setCounterActive(true)     // ← start counter on section enter
+        const p = self.progress
+        setScrollProgress(p)
+
+        // Clock accelerates exponentially
+        setClockSpeed(1 + p * 8)
+
+        // Cans pile up in second half
+        setCansProgress(Math.min(Math.max((p - 0.3) / 0.6, 0), 1))
+
+        // Sleep hours count up
+        setSleepHours(Math.floor(p * 36))
+
+        // Unlock timeline + counter mid-way
+        if (p > 0.4) setTimelineVisible(true)
+        if (p > 0.55) setCounterActive(true)
       },
     })
 
@@ -968,7 +975,7 @@ export default function Section4_DeadlineHell() {
 
     ScrollTrigger.create({
       trigger: timelineRef.current,
-      start: 'top 80%',
+      start:   'top 80%',
       onEnter: () => setTimelineVisible(true),
     })
   }, sectionRef, [])
@@ -979,7 +986,7 @@ export default function Section4_DeadlineHell() {
 
     ScrollTrigger.create({
       trigger: counterRef.current,
-      start: 'top 80%',
+      start:   'top 80%',
       onEnter: () => setCounterActive(true),
     })
   }, sectionRef, [])
@@ -995,9 +1002,9 @@ export default function Section4_DeadlineHell() {
         backgroundColor: 'rgba(12,8,22,1)',
         scrollTrigger: {
           trigger: sectionRef.current,
-          start: 'top bottom',
-          end: 'bottom top',
-          scrub: 2,
+          start:   'top bottom',
+          end:     'bottom top',
+          scrub:   2,
         },
       }
     )
@@ -1149,17 +1156,17 @@ export default function Section4_DeadlineHell() {
                     transition={{ duration: 0.3 }}
                     className={`
                       font-space text-sm sm:text-base font-semibold
-                      ${clockSpeed > 7 ? 'text-neon-red' :
+                      ${clockSpeed > 7 ? 'text-neon-red'    :
                         clockSpeed > 4 ? 'text-neon-yellow' :
-                          'text-neon-green'}
+                        'text-neon-green'}
                     `}
                     aria-live="polite"
                   >
                     {clockSpeed > 7 ? '🔥 Why does time move so fast' :
-                      clockSpeed > 5 ? '😱 Deadline in T-minus hours' :
-                        clockSpeed > 3 ? '😰 Still optimistic (lie)' :
-                          clockSpeed > 2 ? '🤔 This is fine' :
-                            '☕ Just started. Totally fine.'}
+                     clockSpeed > 5 ? '😱 Deadline in T-minus hours'  :
+                     clockSpeed > 3 ? '😰 Still optimistic (lie)'     :
+                     clockSpeed > 2 ? '🤔 This is fine'               :
+                     '☕ Just started. Totally fine.'}
                   </motion.p>
                 </AnimatePresence>
                 <p className="font-mono text-[10px] text-white/20">
@@ -1214,13 +1221,13 @@ export default function Section4_DeadlineHell() {
               {
                 value: '247',
                 label: 'total commits',
-                sub: 'git log --oneline | wc -l',
+                sub:   'git log --oneline | wc -l',
                 color: 'text-neon-purple',
               },
               {
                 value: '3',
                 label: 'existential crises',
-                sub: 'one per day, on schedule',
+                sub:   'one per day, on schedule',
                 color: 'text-neon-red',
               },
             ].map(({ value, label, sub, color }) => (
